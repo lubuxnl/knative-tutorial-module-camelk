@@ -3,6 +3,9 @@
 
 [source,bash,subs="+macros,+attributes"]
 ----
+# We will call this cloned directory as $TUTORIAL_HOME
+git clone {camelk-module-github-repo-uri}
+
 cd $TUTORIAL_HOME/work
 
 git clone {camelk-demos-github-repo-uri}
