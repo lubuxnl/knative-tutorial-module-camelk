@@ -1,7 +1,7 @@
 = Eventing with Apache Camel
 include::_attributes.adoc[]
 
-This chapter will show how to do **Eventing with Apache Camel and Knative ** using the Camel-k framework, one or more of the following Enterprise Integration Patterns(EIP) or concepts will be used in this chapter's exercises.
+This tutorial will show how to do **Eventing with Apache Camel and Knative ** using the Camel-k framework, one or more of the following Enterprise Integration Patterns(EIP) or concepts will be used in this chapter's exercises.
 
 * https://www.enterpriseintegrationpatterns.com/patterns/messaging/IntegrationStylesIntro.html[Integration Styles]
 ** https://www.enterpriseintegrationpatterns.com/patterns/messaging/FileTransferIntegration.html[File Transfer]
@@ -12,6 +12,10 @@ This chapter will show how to do **Eventing with Apache Camel and Knative ** usi
 ** https://www.enterpriseintegrationpatterns.com/patterns/messaging/ContentBasedRouter.html[Content Based Router]
 * https://www.enterpriseintegrationpatterns.com/patterns/messaging/Sequencer.html[Splitter]
 * https://www.enterpriseintegrationpatterns.com/patterns/messaging/Aggregator.html[Aggregator]
+
+[#camelk-tutorial-prerequisite]
+== Prerequisite 
+As pre-requisite to this tutorial, its highly recommended that you have completed xref:knative-tutorial:ROOT:index.adoc[Knative Tutorial Basics] completed.
 
 == What is Camel-k ?
 

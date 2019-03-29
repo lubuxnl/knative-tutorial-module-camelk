@@ -5,7 +5,7 @@ In this chapter we will use Knative + Camel-k to deploy a route that will parse 
 
 [#cbr-prereq]
 == Prerequisite
-include::camelk:partial$prereqs.adoc[]
+include::partial$prereqs.adoc[]
 
 [#cbr-overview]
 
@@ -33,7 +33,7 @@ image::cbd-demo-overview.png[Content Based Routing]
 [#cbr-deployment]
 == Deployment 
 
-NOTE: You can skip this step and move to <<cbr-create-channels,create knative channels>> if you have already completed the xref:camelk:poll-enrich.adoc[previous section]
+NOTE: You can skip this step and move to <<cbr-create-channels,create knative channels>> if you have already completed the xref:poll-enrich.adoc[previous section]
 
 [#cbr-make-s3-data-bucket]
 === Make s3 **data** bucket
@@ -41,29 +41,29 @@ NOTE: You can skip this step and move to <<cbr-create-channels,create knative ch
 :s3-bucket: data
 :k8s-env: minikube
 :k8s-cli: kubectl
-include::camelk:partial$minio-and-s3.adoc[tags=s3-url]
+include::partial$minio-and-s3.adoc[tags=s3-url]
 
 .(OR)
 
 :s3-bucket: data
 :k8s-env: minishift
 :k8s-cli: oc
-include::camelk:partial$minio-and-s3.adoc[tag=s3-url]
+include::partial$minio-and-s3.adoc[tag=s3-url]
 
 For this demo we will be using a s3 bucket called `data`, run the following command to create the bucket in s3:
 
-include::camelk:partial$minio-and-s3.adoc[tags=s3-make-bucket]
+include::partial$minio-and-s3.adoc[tags=s3-make-bucket]
 
 Verify the created bucket by listing the s3 storage, running the following command:
 
 :s3-bucket: data
-include::camelk:partial$minio-and-s3.adoc[tags=s3-ls-bucket]
+include::partial$minio-and-s3.adoc[tags=s3-ls-bucket]
 
 For more information on how to use aws cli with minio server is available https://docs.minio.io/docs/aws-cli-with-minio.html[here].
 
 [TIP]
 ====
-You can also create the bucket via the minio xref:camelk:setup.adoc#minio-webconsole[web console].
+You can also create the bucket via the minio xref:setup.adoc#minio-webconsole[web console].
 ====
 
 [#cbr-create-channels]
@@ -137,7 +137,7 @@ NOTE: Note the first build usually takes time, you can watch the status with com
 
 :kube-ns: knativetutorial
 :it-name: comedy-genre-handler
-include::camelk:partial$kamel-objects-status.adoc[tag=integration-status]
+include::partial$kamel-objects-status.adoc[tag=integration-status]
 
 A successfully built integration context will be in a phase called `Running` as shown below:
 
@@ -166,7 +166,7 @@ NOTE: Note the first build usually takes time, you can watch the status with com
 
 :kube-ns: knativetutorial
 :it-name: others-genre-handler
-include::camelk:partial$kamel-objects-status.adoc[tag=integration-status]
+include::partial$kamel-objects-status.adoc[tag=integration-status]
 
 A successfully built integration context will be in a phase called `Running` as shown below:
 
@@ -197,7 +197,7 @@ NOTE: Note the first build usually takes time, you can watch the status with com
 
 :kube-ns: knativetutorial
 :it-name: cartooon-genre-router
-include::camelk:partial$kamel-objects-status.adoc[tag=integration-status]
+include::partial$kamel-objects-status.adoc[tag=integration-status]
 
 A successfully built integration context will be in a phase called `Running` as shown below:
 
@@ -218,7 +218,7 @@ The command above will create the following Kubernetes resources
 NOTE: Some of the columns has removed from the above output for brevity
 
 ==== Services
-include::camelk:partial$camel-k-k8s-objects.adoc[tag=svc]
+include::partial$camel-k-k8s-objects.adoc[tag=svc]
 
 The above command should return you the following services:
 
@@ -238,7 +238,7 @@ others-genre-handler-jnwsd-service   ClusterIP      10.111.172.10    <none>     
 ----
 
 ==== Integration Contexts 
-include::camelk:partial$camel-k-k8s-objects.adoc[tag=integrations]
+include::partial$camel-k-k8s-objects.adoc[tag=integrations]
 
 [source,bash]
 ----
@@ -249,7 +249,7 @@ others-genre-handler    Running ctx-bi0h1ur6a8efvn05oqbg
 ----
 
 ==== Deployments 
-include::camelk:partial$camel-k-k8s-objects.adoc[tag=deployments]
+include::partial$camel-k-k8s-objects.adoc[tag=deployments]
 
 [source,bash]
 ----
@@ -270,17 +270,17 @@ Watching the logs of the deployed camel route.
 
 :kube-ns: knativetutorial
 :kube-svc: comedy-genre-handler
-include::ROOT:partial$watching-logs.adoc[]
+include::knative-tutorial:ROOT:partial$watching-logs.adoc[]
 
 ==== Other Genre Handler
 :kube-ns: knativetutorial
 :kube-svc: others-genre-handler
-include::ROOT:partial$watching-logs.adoc[]
+include::knative-tutorial:ROOT:partial$watching-logs.adoc[]
 
 ==== Comedy Genre Router
 :kube-ns: knativetutorial
 :kube-svc: comedy-genre-router
-include::ROOT:partial$watching-logs.adoc[]
+include::knative-tutorial:ROOT:partial$watching-logs.adoc[]
 
 [#cbr-test-cartoon-genre-router]
 === Test the Route
@@ -298,33 +298,33 @@ cd $TUTORIAL_HOME/work/knative-tutorial-camel-k/quickstart
 :s3-bucket: data
 :k8s-env: minikube
 :k8s-cli: kubectl
-include::camelk:partial$minio-and-s3.adoc[tags=s3-url]
+include::partial$minio-and-s3.adoc[tags=s3-url]
 
 .(OR)
 
 :s3-bucket: data
 :k8s-env: minishift
 :k8s-cli: oc
-include::camelk:partial$minio-and-s3.adoc[tag=s3-url]
+include::partial$minio-and-s3.adoc[tag=s3-url]
 
 Upload XML file called `message1.xml` to s3 bucket called `data`,
 
 :s3-bucket: data
 :s3-upload-file-link: {camelk-demos-github-repo}/quickstart/data/message1.xml
 :s3-upload-file: data/message1.xml
-include::camelk:partial$minio-and-s3.adoc[tag=s3-upload-file]
+include::partial$minio-and-s3.adoc[tag=s3-upload-file]
 
 Upload XML file called `message2.xml` to s3 bucket called `data`,
 
 :s3-bucket: data
 :s3-upload-file-link: {camelk-demos-github-repo}/quickstart/data/message2.xml
 :s3-upload-file: data/message2.xml
-include::camelk:partial$minio-and-s3.adoc[tag=s3-upload-file]
+include::partial$minio-and-s3.adoc[tag=s3-upload-file]
 
 Verify if the XML files were uploaded to the  s3 bucket:
 
 :s3-bucket: data
-include::camelk:partial$minio-and-s3.adoc[tag=s3-ls-bucket]
+include::partial$minio-and-s3.adoc[tag=s3-ls-bucket]
 
 [#cbr-invoke-service]
 ==== Invoke service
@@ -333,17 +333,17 @@ Invoke the service by passing a header `fileName` with value `message1.xml`, thi
 
 :k8s-env: minikube
 :k8s-cli: kubectl
-include::ROOT:partial$invoke-service.adoc[tag=env]
+include::knative-tutorial:ROOT:partial$invoke-service.adoc[tag=env]
 
 .(OR)
 
 :k8s-env: minishift
 :k8s-cli: oc
-include::ROOT:partial$invoke-service.adoc[tag=env]
+include::knative-tutorial:ROOT:partial$invoke-service.adoc[tag=env]
 
 :svc-name:  cartoon-genre-router
 :file-name: message1.xml
-include::camelk:partial$invoke-service.adoc[tags=set-svc-url;invoke-svc]
+include::partial$invoke-service.adoc[tags=set-svc-url;invoke-svc]
 
 [NOTE]
 ====
@@ -353,17 +353,17 @@ The event simulation above will be removed once the CamelSource event source is 
 On success which is usually HTTP 200, you can list the out `genre-comedy` bucket to see the file `tomandjerry.xml`. You can list the bucket using the command:
 
 :s3-bucket: genre-comedy
-include::camelk:partial$minio-and-s3.adoc[tag=s3-ls-bucket]
+include::partial$minio-and-s3.adoc[tag=s3-ls-bucket]
 
 Lets try to upload non `comedy` genre to see the file getting uploaded to `genre-others`,
 
 :file-name: message2.xml
-include::camelk:partial$invoke-service.adoc[tag=invoke-svc]
+include::partial$invoke-service.adoc[tag=invoke-svc]
 
 Like before on success which is usually HTTP 200, you can list the out `genre-others` bucket to see the file `theadventuresoftenaliraman.xml`. You can list the bucket using the command:
 
 :s3-bucket: genre-others
-include::camelk:partial$minio-and-s3.adoc[tag=s3-ls-bucket]
+include::partial$minio-and-s3.adoc[tag=s3-ls-bucket]
 
 [NOTE]
 ====

@@ -5,7 +5,7 @@ In this chapter we will use Knative + Camel-k to deploy a simple route that will
 
 [#pe-prereq]
 == Prerequisite
-include::camelk:partial$prereqs.adoc[]
+include::partial$prereqs.adoc[]
 
 [#pe-overview]
 == Enterprise Integration Pattern
@@ -29,7 +29,7 @@ image::poll-enrich-demo.png[Poll Enricher]
 [#pe-deployment]
 == Deployment 
 
-NOTE: You can skip this step and move to <<pe-cartoon-messages-downloader,deploy cartoon message downloader>> if you have already completed the xref:camelk:getting-started.adoc[previous section]
+NOTE: You can skip this step and move to <<pe-cartoon-messages-downloader,deploy cartoon message downloader>> if you have already completed the xref:getting-started.adoc[previous section]
 
 [#pe-make-s3-data-bucket]
 === Make s3 **data** bucket
@@ -37,29 +37,29 @@ NOTE: You can skip this step and move to <<pe-cartoon-messages-downloader,deploy
 :s3-bucket: data
 :k8s-env: minikube
 :k8s-cli: kubectl
-include::camelk:partial$minio-and-s3.adoc[tags=s3-url]
+include::partial$minio-and-s3.adoc[tags=s3-url]
 
 .(OR)
 
 :s3-bucket: data
 :k8s-env: minishift
 :k8s-cli: oc
-include::camelk:partial$minio-and-s3.adoc[tag=s3-url]
+include::partial$minio-and-s3.adoc[tag=s3-url]
 
 For this demos we will be using a s3 bucket called `data`, run the following command to create the bucket in s3:
 
-include::camelk:partial$minio-and-s3.adoc[tags=s3-make-bucket]
+include::partial$minio-and-s3.adoc[tags=s3-make-bucket]
 
 Verify the created bucket by listing the s3 storage, running the following command:
 
 :s3-bucket: data
-include::camelk:partial$minio-and-s3.adoc[tags=s3-ls-bucket]
+include::partial$minio-and-s3.adoc[tags=s3-ls-bucket]
 
 For more information on how to use aws cli with minio server is available https://docs.minio.io/docs/aws-cli-with-minio.html[here].
 
 [TIP]
 ====
-You can also create the bucket via the minio xref:camelk:setup.adoc#minio-webconsole[web console].
+You can also create the bucket via the minio xref:setup.adoc#minio-webconsole[web console].
 ====
 
 [#pe-cartoon-messages-downloader]
@@ -98,7 +98,7 @@ cartoon-messages-downloader  Building Context        ctx-bhvn6lcba0587gdq5jbg
 
 :kube-ns: knativetutorial
 :kube-svc: cartoon-messages-downloader
-include::ROOT:partial$watching-logs.adoc[]
+include::knative-tutorial:ROOT:partial$watching-logs.adoc[]
 
 [#pe-test-cartoon-messages-downloader]
 === Test the Route
@@ -116,33 +116,33 @@ cd $TUTORIAL_HOME/work/knative-tutorial-camel-k/quickstart
 :s3-bucket: data
 :k8s-env: minikube
 :k8s-cli: kubectl
-include::camelk:partial$minio-and-s3.adoc[tags=s3-url]
+include::partial$minio-and-s3.adoc[tags=s3-url]
 
 .(OR)
 
 :s3-bucket: data
 :k8s-env: minishift
 :k8s-cli: oc
-include::camelk:partial$minio-and-s3.adoc[tag=s3-url]
+include::partial$minio-and-s3.adoc[tag=s3-url]
 
 Upload XML file called `message1.xml` to s3 bucket called `data`,
 
 :s3-bucket: data
 :s3-upload-file-link: {camelk-demos-github-repo}/quickstart/data/message1.xml
 :s3-upload-file: data/message1.xml
-include::camelk:partial$minio-and-s3.adoc[tag=s3-upload-file]
+include::partial$minio-and-s3.adoc[tag=s3-upload-file]
 
 Upload a text file called `hello.txt` to s3 bucket called `data`,
 
 :s3-bucket: data
 :s3-upload-file-link: {camelk-demos-github-repo}/quickstart/data/hello.txt
 :s3-upload-file: data/hello.txt
-include::camelk:partial$minio-and-s3.adoc[tag=s3-upload-file]
+include::partial$minio-and-s3.adoc[tag=s3-upload-file]
 
 Verify if the XML and text files were uploaded to the  s3 bucket:
 
 :s3-bucket: data
-include::camelk:partial$minio-and-s3.adoc[tag=s3-ls-bucket]
+include::partial$minio-and-s3.adoc[tag=s3-ls-bucket]
 
 [#pe-invoke-service]
 ==== Invoke service
@@ -151,17 +151,17 @@ Invoke the service by passing a header `fileName` with value `message1.xml`, thi
 
 :k8s-env: minikube
 :k8s-cli: kubectl
-include::ROOT:partial$invoke-service.adoc[tag=env]
+include::knative-tutorial:ROOT:partial$invoke-service.adoc[tag=env]
 
 .(OR)
 
 :k8s-env: minishift
 :k8s-cli: oc
-include::ROOT:partial$invoke-service.adoc[tag=env]
+include::knative-tutorial:ROOT:partial$invoke-service.adoc[tag=env]
 
 :svc-name: cartoon-messages-downloader 
 :file-name: message1.xml
-include::camelk:partial$invoke-service.adoc[tags=set-svc-url;invoke-svc]
+include::partial$invoke-service.adoc[tags=set-svc-url;invoke-svc]
 
 [NOTE]
 ====
