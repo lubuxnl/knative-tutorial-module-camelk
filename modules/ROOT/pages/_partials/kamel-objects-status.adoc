@@ -6,7 +6,7 @@
 ----
 kubectl -n {kube-ns} get integrations.camel.apache.org {it-name}
 ----
-.(OR)
+**(OR)**
 [source,bash,subs="+macros,+attributes"]
 ----
 oc -n {kube-ns} get integrations.camel.apache.org {it-name}

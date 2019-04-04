@@ -16,7 +16,7 @@ The following checks ensures that each chapter exercises are done with right env
 minikube ssh -- docker run -i --rm --privileged --pid=host debian nsenter -t 1 -m -u -n -i hwclock -s
 ----
 
-.(OR)
+**(OR)**
 [source,bash]
 ----
 minishift stop
@@ -46,7 +46,7 @@ chmod +x ~/.wakeup
 eval $(minikube docker-env)
 ----
 
-.(OR)
+**(OR)**
 [source,bash]
 ----
 eval $(minishift docker-env) && eval $(minishift oc-env)
@@ -59,7 +59,7 @@ eval $(minishift docker-env) && eval $(minishift oc-env)
 # kubernetes v1.12+
 kubectl version
 ----
-.(OR)
+**(OR)**
 [source,bash]
 ----
 # oc v3.11.0+0cbc58b kubernetes v1.11.0+d4cacc0

@@ -39,7 +39,7 @@ NOTE: You can skip this step and move to <<pe-cartoon-messages-downloader,deploy
 :k8s-cli: kubectl
 include::partial$minio-and-s3.adoc[tags=s3-url]
 
-.(OR)
+**(OR)**
 
 :s3-bucket: data
 :k8s-env: minishift
@@ -118,7 +118,7 @@ cd $TUTORIAL_HOME/work/knative-tutorial-camel-k/quickstart
 :k8s-cli: kubectl
 include::partial$minio-and-s3.adoc[tags=s3-url]
 
-.(OR)
+**(OR)**
 
 :s3-bucket: data
 :k8s-env: minishift
@@ -153,7 +153,7 @@ Invoke the service by passing a header `fileName` with value `message1.xml`, thi
 :k8s-cli: kubectl
 include::knative-tutorial:ROOT:partial$invoke-service.adoc[tag=env]
 
-.(OR)
+**(OR)**
 
 :k8s-env: minishift
 :k8s-cli: oc

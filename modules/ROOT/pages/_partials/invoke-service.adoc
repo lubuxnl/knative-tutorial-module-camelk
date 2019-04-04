@@ -10,7 +10,7 @@ We need to know the knative service `{svc-name}` domain name that needs to be pa
 SVC_URL=`kubectl -n knativetutorial get ksvc {svc-name} -ojsonpath='{.status.domain}'`
 ----
 
-.(OR)
+**(OR)**
 
 [source,bash,subs="+macros,+attributes"]
 ----
@@ -25,7 +25,7 @@ SVC_URL=`oc  -n knativetutorial get ksvc {svc-name} -ojsonpath='{.status.domain}
 curl -v -H pass:["Host:${SVC_URL}"] -H 'fileName: {file-name}' $IP_ADDRESS
 ----
 
-.(OR)
+**(OR)**
 
 [source,bash,subs="+macros,+attributes"]
 ----

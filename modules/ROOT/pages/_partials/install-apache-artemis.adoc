@@ -8,7 +8,7 @@ cd $TUTORIAL_HOME/apps/apache-artemis
 kubectl apply -n knativetutorial -f link:{github-repo}/apps/apache-artemis/skaffold.yaml[skaffold.yaml]
 ----
 
-.(OR)
+**(OR)**
 
 [source,bash,subs="+macros,+attributes"]
 ----
@@ -32,7 +32,7 @@ The Apache Artemis deployment has https://hawt.io/[hawt.io] based web interface 
 minikube service list -n knativetutorial
 ----
 
-.(OR)
+**(OR)**
 
 [source,bash,subs="+macros,+attributes"]
 ----
@@ -60,7 +60,7 @@ image::artemis-management-console.png[]
 ====
 * You can use the command `minikube service <service-name> -n knativetutorial` to open the service automatically in the default browser of your system
 
-.(OR)
+**(OR)**
 
 * You can use the command `minishift openshfit service <service-name> -n knativetutorial` --in-browser to open the service automatically in the default browser of your system
 ====

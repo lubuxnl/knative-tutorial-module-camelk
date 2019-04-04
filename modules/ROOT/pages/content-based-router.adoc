@@ -43,7 +43,7 @@ NOTE: You can skip this step and move to <<cbr-create-channels,create knative ch
 :k8s-cli: kubectl
 include::partial$minio-and-s3.adoc[tags=s3-url]
 
-.(OR)
+**(OR)**
 
 :s3-bucket: data
 :k8s-env: minishift
@@ -81,7 +81,7 @@ cd $TUTORIAL_HOME/{camelk-repo}/knative
 kubectl  -n knativetutorial apply -f link:{github-repo}/{camelk-repo}/knative/channels.yaml[channels.yaml]
 ----
 
-.(OR)
+**(OR)**
 
 ----
 oc -n knativetutorial apply -f channels.yaml
@@ -94,7 +94,7 @@ Checking the channels created:
 kubectl  -n knativetutorial get channels.eventing.knative.dev
 ----
 
-.(OR)
+**(OR)**
 
 ----
 oc -n knativetutorial get channels.eventing.knative.dev
@@ -300,7 +300,7 @@ cd $TUTORIAL_HOME/work/knative-tutorial-camel-k/quickstart
 :k8s-cli: kubectl
 include::partial$minio-and-s3.adoc[tags=s3-url]
 
-.(OR)
+**(OR)**
 
 :s3-bucket: data
 :k8s-env: minishift
@@ -335,7 +335,7 @@ Invoke the service by passing a header `fileName` with value `message1.xml`, thi
 :k8s-cli: kubectl
 include::knative-tutorial:ROOT:partial$invoke-service.adoc[tag=env]
 
-.(OR)
+**(OR)**
 
 :k8s-env: minishift
 :k8s-cli: oc
@@ -388,7 +388,7 @@ cd $TUTORIAL_HOME/{camelk-repo}/knative
 kubectl delete -f channels.yaml -n knativetutorial
 cd $TUTORIAL_HOME
 ----
-.(OR)
+**(OR)**
 [source,bash,subs="+macros,+attributes"]
 ----
 oc delete -f channels.yaml -n knativetutorial

@@ -32,7 +32,7 @@ cd $TUTORIAL_HOME/apps/minio-s3-server
 kubectl apply -n knativetutorial -f link:{github-repo}/apps/minio-s3-server/skaffold.yaml[skaffold.yaml]
 ----
 
-.(OR)
+**(OR)**
 
 [source,bash,subs="+macros,+attributes"]
 ----
@@ -59,7 +59,7 @@ The mino server exposes a web interface for managing the storage objects. To kno
 minikube service list -n knativetutorial
 ----
 
-.(OR)
+**(OR)**
 
 [source,bash,subs="+macros,+attributes"]
 ----
@@ -156,7 +156,7 @@ When camel-k builds the images, it pushes built container image to the local reg
 :k8s-cli: kubectl
 include::partial$extras.adoc[tag=config-k8s-local-registry]
 
-.(OR)
+**(OR)**
 
 :k8s-cli: oc
 include::partial$extras.adoc[tag=config-k8s-local-registry]

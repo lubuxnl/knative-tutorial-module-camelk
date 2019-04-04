@@ -12,7 +12,7 @@ You can use kbd:[CTRL + c ] to terminate the watch
 ----
 kubectl -n {kube-ns} get pods -w 
 ----
-.(OR)
+**(OR)**
 [source,bash,subs="+macros,+attributes"]
 ----
 oc -n  {kube-ns} get pods -w 
@@ -29,7 +29,7 @@ Wait for the pods to be running:
 timeout 300 "kubectl get pods -n {kube-ns} 2>&1 | grep -v -E '(Running|Completed|STATUS)'"
 ----
 
-.(OR)
+**(OR)**
 
 [source,bash,subs="+macros,+attributes"]
 ----

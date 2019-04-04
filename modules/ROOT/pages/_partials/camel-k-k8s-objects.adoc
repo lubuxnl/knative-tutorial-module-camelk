@@ -4,7 +4,7 @@
 kubectl -n knativetutorial  get integrations.camel.apache.org
 ----
 
-.(OR)
+**(OR)**
 
 [source,bash,linenums]
 ----
@@ -18,7 +18,7 @@ oc -n knativetutorial  get get integrations.camel.apache.org
 kubectl -n knativetutorial  get svc
 ----
 
-.(OR)
+**(OR)**
 
 [source,bash,linenums]
 ----
@@ -32,7 +32,7 @@ oc -n knativetutorial  get get svc
 kubectl -n knativetutorial  get deployments
 ----
 
-.(OR)
+**(OR)**
 
 [source,bash,linenums]
 ----
