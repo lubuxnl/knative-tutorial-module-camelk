@@ -29,7 +29,7 @@ We will use s3 Object storage for all https://www.enterpriseintegrationpatterns.
 [source,bash,subs="+macros,+attributes"]
 ----
 cd $TUTORIAL_HOME/apps/minio-s3-server
-kubectl apply -n knativetutorial -f link:{github-repo}/apps/minio-s3-server/skaffold.yaml[skaffold.yaml]
+kubectl apply -n {tutorial-namespace} -f link:{github-repo}/apps/minio-s3-server/skaffold.yaml[skaffold.yaml]
 ----
 
 **(OR)**
@@ -37,7 +37,7 @@ kubectl apply -n knativetutorial -f link:{github-repo}/apps/minio-s3-server/skaf
 [source,bash,subs="+macros,+attributes"]
 ----
 cd $TUTORIAL_HOME/apps/minio-s3-server
-oc apply -n knativetutorial -f link:{github-repo}/apps/minio-s3-server/skaffold.yaml[skaffold.yaml]
+oc apply -n {tutorial-namespace} -f link:{github-repo}/apps/minio-s3-server/skaffold.yaml[skaffold.yaml]
 ----
 
 :kube-ns: knativetutorial
@@ -47,7 +47,7 @@ A successful deployment of the minio server will show the following pods:
 
 [source,bash,subs="+macros,+attributes"]
 ----
-# kubectl -n knativetutorial get pods
+# kubectl -n {tutorial-namespace} get pods
 NAME                            READY   STATUS    RESTARTS   AGE
 minio-server-66449f64bf-dtkch   1/1     Running   0          1m
 ----
@@ -56,14 +56,14 @@ The mino server exposes a web interface for managing the storage objects. To kno
 
 [source,bash]
 ----
-minikube service list -n knativetutorial
+minikube service list -n {tutorial-namespace}
 ----
 
 **(OR)**
 
 [source,bash,subs="+macros,+attributes"]
 ----
-minishift openshift service list -n knativetutorial
+minishift openshift service list -n {tutorial-namespace}
 ----
 
 The above command produces an output like:
@@ -105,7 +105,7 @@ Run the following commands to install the camel-k operator in the Kubernetes/Ope
 
 [source,bash,subs="+macros,+attributes"]
 ----
-kamel install -n knativetutorial --runtime-version='0.3.1-SNAPSHOT' # <1>
+kamel install -n {tutorial-namespace} --runtime-version='0.3.1-SNAPSHOT' # <1>
 ----
 <1> Due to a existing https://github.com/apache/camel-k/issues/506[bug] which will be fixed as part of 0.3.1 runtime release, we need to use the 0.3.1-SNAPSHOT of the runtime. This constraint will be removed once 0.3.1 runtime is released.
 
@@ -121,7 +121,7 @@ A successful camel-k setup will have the following pods running/completed in `kn
 
 [source,bash,subs="+macros,+attributes"]
 ----
-# kubectl -n knativetutorial get pods | grep camel
+# kubectl -n {tutorial-namespace} get pods | grep camel
 camel-k-cache                                              0/1     Completed   0          10h
 camel-k-ctx-bhq1ddi92mi5b779io60                           0/1     Completed   0          10h
 camel-k-groovy                                             0/1     Completed   0          10h
@@ -140,7 +140,7 @@ e.g. assuming you have nexus repository manager and is available at `http://192.
 
 [source,bash,subs="+macros,+attributes"]
 ----
-kamel install -n knativetutorial \
+kamel install -n {tutorial-namespace} \
   --runtime-version="0.3.1-SNAPSHOT" \
   --repository="http://192.168.64.1:8081/nexus/content/groups/public@id=public@snapshots"
 ----

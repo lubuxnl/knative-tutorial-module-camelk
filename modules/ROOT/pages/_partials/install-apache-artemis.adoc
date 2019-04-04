@@ -5,7 +5,7 @@ Run the following commands to setup Apache Artemis server:
 [source,bash,subs="+macros,+attributes"]
 ----
 cd $TUTORIAL_HOME/apps/apache-artemis
-kubectl apply -n knativetutorial -f link:{github-repo}/apps/apache-artemis/skaffold.yaml[skaffold.yaml]
+kubectl apply -n {tutorial-namespace} -f link:{github-repo}/apps/apache-artemis/skaffold.yaml[skaffold.yaml]
 ----
 
 **(OR)**
@@ -13,7 +13,7 @@ kubectl apply -n knativetutorial -f link:{github-repo}/apps/apache-artemis/skaff
 [source,bash,subs="+macros,+attributes"]
 ----
 cd $TUTORIAL_HOME/apps/apache-artemis
-oc apply -n knativetutorial -f link:{github-repo}/apps/apache-artemis/skaffold.yaml[skaffold.yaml]
+oc apply -n {tutorial-namespace} -f link:{github-repo}/apps/apache-artemis/skaffold.yaml[skaffold.yaml]
 ----
 
 A successful deployment of the apache artemis server will show the following pods:
@@ -29,14 +29,14 @@ The Apache Artemis deployment has https://hawt.io/[hawt.io] based web interface 
 
 [source,bash,subs="+macros,+attributes"]
 ----
-minikube service list -n knativetutorial
+minikube service list -n {tutorial-namespace}
 ----
 
 **(OR)**
 
 [source,bash,subs="+macros,+attributes"]
 ----
-minishift openshift service list -n knativetutorial
+minishift openshift service list -n {tutorial-namespace}
 ----
 
 
@@ -58,9 +58,9 @@ image::artemis-management-console.png[]
 
 [TIP]
 ====
-* You can use the command `minikube service <service-name> -n knativetutorial` to open the service automatically in the default browser of your system
+* You can use the command `minikube service <service-name> -n {tutorial-namespace}` to open the service automatically in the default browser of your system
 
 **(OR)**
 
-* You can use the command `minishift openshfit service <service-name> -n knativetutorial` --in-browser to open the service automatically in the default browser of your system
+* You can use the command `minishift openshfit service <service-name> -n {tutorial-namespace}` --in-browser to open the service automatically in the default browser of your system
 ====

@@ -27,7 +27,7 @@ aws configure list #<4>
 #tag::s3-url[]
 [source,bash,subs="+macros,+attributes"]
 ----
-S3_URL=$({k8s-env} service -n knativetutorial minio-server --url)
+S3_URL=$({k8s-env} service -n {tutorial-namespace} minio-server --url)
 ----
 #end::s3-url[]
 

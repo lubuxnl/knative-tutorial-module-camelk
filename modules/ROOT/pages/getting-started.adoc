@@ -207,5 +207,5 @@ Right now camel-k does not add Liveliness and Readiness Probes which can help av
 
 [source,bash,subs="+macros,+attributes"]
 ----
-kamel delete cartoon-messages-mover -n knativetutorial
+kamel delete cartoon-messages-mover -n {tutorial-namespace}
 ----

@@ -78,26 +78,26 @@ cd $TUTORIAL_HOME/{camelk-repo}/knative
 
 [source,bash,subs="+macros,+attributes"]
 ----
-kubectl  -n knativetutorial apply -f link:{github-repo}/{camelk-repo}/knative/channels.yaml[channels.yaml]
+kubectl  -n {tutorial-namespace} apply -f link:{github-repo}/{camelk-repo}/knative/channels.yaml[channels.yaml]
 ----
 
 **(OR)**
 
 ----
-oc -n knativetutorial apply -f channels.yaml
+oc -n {tutorial-namespace} apply -f channels.yaml
 ----
 
 Checking the channels created:
 
 [source,bash,subs="+macros,+attributes"]
 ----
-kubectl  -n knativetutorial get channels.eventing.knative.dev
+kubectl  -n {tutorial-namespace} get channels.eventing.knative.dev
 ----
 
 **(OR)**
 
 ----
-oc -n knativetutorial get channels.eventing.knative.dev
+oc -n {tutorial-namespace} get channels.eventing.knative.dev
 ----
 
 Running the above commands should produce output as shown:
@@ -377,20 +377,20 @@ Right now camel-k does not add Liveliness and Readiness Probes which can help av
 
 [source,bash,subs="+macros,+attributes"]
 ----
-kamel delete comedy-genre-handler -n knativetutorial
-kamel delete others-genre-handler -n knativetutorial
-kamel delete cartoon-genre-router -n knativetutorial
+kamel delete comedy-genre-handler -n {tutorial-namespace}
+kamel delete others-genre-handler -n {tutorial-namespace}
+kamel delete cartoon-genre-router -n {tutorial-namespace}
 cd $TUTORIAL_HOME/{camelk-repo}/knative
 ----
 
 [source,bash,subs="+macros,+attributes"]
 ----
-kubectl delete -f channels.yaml -n knativetutorial
+kubectl delete -f channels.yaml -n {tutorial-namespace}
 cd $TUTORIAL_HOME
 ----
 **(OR)**
 [source,bash,subs="+macros,+attributes"]
 ----
-oc delete -f channels.yaml -n knativetutorial
+oc delete -f channels.yaml -n {tutorial-namespace}
 cd $TUTORIAL_HOME
 ----

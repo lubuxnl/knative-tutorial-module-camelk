@@ -1,41 +1,41 @@
 #tag::integrations[]
 [source,bash,linenums]
 ----
-kubectl -n knativetutorial  get integrations.camel.apache.org
+kubectl -n {tutorial-namespace}  get integrations.camel.apache.org
 ----
 
 **(OR)**
 
 [source,bash,linenums]
 ----
-oc -n knativetutorial  get get integrations.camel.apache.org
+oc -n {tutorial-namespace}  get get integrations.camel.apache.org
 ----
 #end::integrations[]
 
 #tag::svc[]
 [source,bash,linenums]
 ----
-kubectl -n knativetutorial  get svc
+kubectl -n {tutorial-namespace}  get svc
 ----
 
 **(OR)**
 
 [source,bash,linenums]
 ----
-oc -n knativetutorial  get get svc
+oc -n {tutorial-namespace}  get get svc
 ----
 #end::svc[]
 
 #tag::deployments[]
 [source,bash,linenums]
 ----
-kubectl -n knativetutorial  get deployments
+kubectl -n {tutorial-namespace}  get deployments
 ----
 
 **(OR)**
 
 [source,bash,linenums]
 ----
-oc -n knativetutorial  get get deployments
+oc -n {tutorial-namespace}  get get deployments
 ----
 #end::deployments[]
