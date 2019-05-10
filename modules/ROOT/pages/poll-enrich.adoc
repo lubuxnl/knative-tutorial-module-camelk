@@ -151,12 +151,14 @@ Invoke the service by passing a header `fileName` with value `message1.xml`, thi
 
 :k8s-env: minikube
 :k8s-cli: kubectl
+:doc-sec: pe-is
 include::knative-tutorial:ROOT:partial$invoke-service.adoc[tag=env]
 
 **(OR)**
 
 :k8s-env: minishift
 :k8s-cli: oc
+:doc-sec: pe-is
 include::knative-tutorial:ROOT:partial$invoke-service.adoc[tag=env]
 
 :svc-name: cartoon-messages-downloader 
