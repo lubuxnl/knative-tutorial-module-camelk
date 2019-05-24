@@ -245,8 +245,6 @@ include::partial$minio-and-s3.adoc[tag=s3-ls-bucket]
 [NOTE]
 ====
 When the `cartoon-messages-mover` has been scaled to zero; when giving a new request it will try to scale up, it will not be able to serve the request until the pod is up, during such time you might get HTTP 502 Bad Gateway errors, give some more time for the pod to come up before issuing the request again.
-
-Right now camel-k does not add Liveliness and Readiness Probes which can help avoid this issue. There is a open https://github.com/apache/camel-k/issues/525[issue] which is fixed and will be part of 0.3.1 release. 
 ====
 
 [#gs-cleanup]

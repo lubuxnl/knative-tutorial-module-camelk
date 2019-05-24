@@ -34,25 +34,37 @@ NOTE: You can skip this step and move to <<cbr-create-channels,create knative ch
 [#cbr-make-s3-data-bucket]
 === Make s3 **data** bucket
 
+[tabs]
+====
+minikube::
++
+--
 :s3-bucket: data
 :k8s-env: minikube
 :k8s-cli: kubectl
+:doc-sec: mkb
 include::partial$minio-and-s3.adoc[tags=s3-url]
-
-**(OR)**
-
+--
+minishift::
++
+--
 :s3-bucket: data
 :k8s-env: minishift
 :k8s-cli: oc
+:doc-sec: mkb
 include::partial$minio-and-s3.adoc[tag=s3-url]
+--
+====
 
 For this demo we will be using a s3 bucket called `data`, run the following command to create the bucket in s3:
 
+:doc-sec: mkb
 include::partial$minio-and-s3.adoc[tags=s3-make-bucket]
 
 Verify the created bucket by listing the s3 storage, running the following command:
 
 :s3-bucket: data
+:doc-sec: lsdata
 include::partial$minio-and-s3.adoc[tags=s3-ls-bucket]
 
 For more information on how to use aws cli with minio server is available https://docs.minio.io/docs/aws-cli-with-minio.html[here].
@@ -65,36 +77,35 @@ You can also create the bucket via the minio xref:setup.adoc#minio-webconsole[we
 [#cbr-create-channels]
 === Create Knative Channels
 
-Navigate to the tutorial chapter's `knative` folder:
+Navigate to camel-k demo sources folder:
 
+[#camelk-nav-to-quickstart-1]
 [source,bash,subs="+macros,+attributes"]
 ----
-cd $TUTORIAL_HOME/{camelk-repo}/knative
+cd $TUTORIAL_HOME/advanced/camel-k/quickstart
 ----
+copyToClipboard::camelk-nav-to-quickstart-1[]
 
+[tabs]
+====
+kubectl::
++
+--
+[#camelk-cbe-create-channel]
 [source,bash,subs="+macros,+attributes"]
 ----
 kubectl  -n {tutorial-namespace} apply -f link:{github-repo}/{camelk-repo}/knative/channels.yaml[channels.yaml]
 ----
-
-**(OR)**
-
-----
-oc -n {tutorial-namespace} apply -f channels.yaml
-----
+copyToClipboard::camelk-cbe-create-channel[]
 
 Checking the channels created:
 
+[#camelk-cbe-check-created-channel]
 [source,bash,subs="+macros,+attributes"]
 ----
 kubectl  -n {tutorial-namespace} get channels.eventing.knative.dev
 ----
-
-**(OR)**
-
-----
-oc -n {tutorial-namespace} get channels.eventing.knative.dev
-----
+copyToClipboard::camelk-cbe-check-created-channel[]
 
 Running the above commands should produce output as shown:
 
@@ -105,35 +116,84 @@ genre-comedy   True
 genre-others   True
 ----
 
-[#cbr-deploy-routes]
-=== Deploy Routes
+--
+oc::
++
+--
+[#camelk-cbe-oc-create-channel]
+[source,bash,subs="+macros,+attributes"]
+----
+oc  -n {tutorial-namespace} apply -f link:{github-repo}/{camelk-repo}/knative/channels.yaml[channels.yaml]
+----
+copyToClipboard::camelk-cbe-oc-create-channel[]
 
-Navigate to the tutorial chapter's `work` folder:
+Checking the channels created:
+
+[#camelk-cbe-oc-check-created-channel]
+[source,bash,subs="+macros,+attributes"]
+----
+oc  -n {tutorial-namespace} get channels.eventing.knative.dev
+----
+copyToClipboard::camelk-cbe-oc-check-created-channel[]
+
+Running the above commands should produce output as shown:
 
 [source,bash,subs="+macros,+attributes"]
 ----
-cd $TUTORIAL_HOME/work/knative-tutorial-camelk/quickstart
+NAME           READY   REASON
+genre-comedy   True
+genre-others   True
 ----
+--
+====
+
+[#cbr-deploy-routes]
+=== Deploy Routes
+
+Navigate to the `quickstart` folder:
+
+[#camelk-nav-to-quickstart-2]
+[source,bash,subs="+macros,+attributes"]
+----
+cd $TUTORIAL_HOME/advanced/camel-k/quickstart
+----
+copyToClipboard::camelk-nav-to-quickstart-2[]
 
 [#cbr-comedy-genre-handler]
 ==== Deploy Comedy Genre Handler
 
+[#camelk-kamel-deploy-int]
 [source,bash,subs="+macros,+attributes"]
 ----
-kamel run --dependency='camel-aws'\#<1>
+kamel run \
   --property 's3EndpointUrl=http://minio-server' \
   --property 'minioAccessKey=demoaccesskey' \
   --property 'minioSecretKey=demosecretkey' \
  link:{camelk-demos-github-repo}/quickstart/src/main/java/ComedyGenreHandler.java[src/main/java/ComedyGenreHandler.java]
 ----
-
-<1> Because of an existing https://github.com/apache/camel-k/issues/527[bug], you  need to add the dependency `camel-aws`, this will be removed in future.
+copyToClipboard::camelk-kamel-deploy-int[]
 
 NOTE: Note the first build usually takes time, you can watch the status with commands
 
+[tabs]
+====
+kubectl::
++
+--
 :kube-ns: knativetutorial
 :it-name: comedy-genre-handler
+:k8s-cli: kubectl
 include::partial$kamel-objects-status.adoc[tag=integration-status]
+--
+oc::
++
+--
+:kube-ns: knativetutorial
+:it-name: comedy-genre-handler
+:k8s-cli: oc
+include::partial$kamel-objects-status.adoc[tag=integration-status]
+--
+====
 
 A successfully built integration context will be in a phase called `Running` as shown below:
 
@@ -148,21 +208,38 @@ comedy-genre-handler    Running ctx-bi0h1ur6a8efvn05oqbg
 [#cbr-others-genre-handler]
 ==== Deploy Others Genre Handler
 
+[#camelk-deploy-others-genre-it]
 [source,bash,subs="+macros,+attributes"]
 ----
-kamel run --dependency='camel-aws'\#<1>
+kamel run \
   --property 's3EndpointUrl=http://minio-server' \
   --property 'minioAccessKey=demoaccesskey' \
   --property 'minioSecretKey=demosecretkey' \
  link:{camelk-demos-github-repo}/quickstart/src/main/java/OthersGenreHandler.java[src/main/java/OthersGenreHandler.java]
 ----
-<1> Because of an existing https://github.com/apache/camel-k/issues/527[bug], you  need to add the dependency `camel-aws`, this will be removed in future.
+copyToClipboard::camelk-deploy-others-genre-it[]
 
 NOTE: Note the first build usually takes time, you can watch the status with commands
 
+[tabs]
+====
+kubectl::
++
+--
 :kube-ns: knativetutorial
 :it-name: others-genre-handler
+:k8s-cli: kubectl
 include::partial$kamel-objects-status.adoc[tag=integration-status]
+--
+oc::
++
+--
+:kube-ns: knativetutorial
+:it-name: others-genre-handler
+:k8s-cli: oc
+include::partial$kamel-objects-status.adoc[tag=integration-status]
+--
+====
 
 A successfully built integration context will be in a phase called `Running` as shown below:
 
@@ -178,22 +255,38 @@ comedy-genre-handler    Running ctx-bi0h1ur6a8efvn05oqbg
 [#cbr-cartoon-genre-router]
 ==== Deploy Cartoon Genre Router
 
+[#camelk-deploy-cartoon-genre-it]
 [source,bash,subs="+macros,+attributes"]
 ----
-kamel run --dependency='camel-aws'\#<1>
+kamel run \
   --property 's3EndpointUrl=http://minio-server' \
   --property 'minioAccessKey=demoaccesskey' \
   --property 'minioSecretKey=demosecretkey' \
  link:{camelk-demos-github-repo}/quickstart/src/main/java/CartoonGenreRouter.java[src/main/java/CartoonGenreRouter.java]
 ----
-
-<1> Because of an existing https://github.com/apache/camel-k/issues/527[bug], you  need to add the dependency `camel-aws`, this will be removed in future.
+copyToClipboard::camelk-deploy-cartoon-genre-it[]
 
 NOTE: Note the first build usually takes time, you can watch the status with command:
 
+[tabs]
+====
+kubectl::
++
+--
 :kube-ns: knativetutorial
 :it-name: cartooon-genre-router
+:k8s-cli: kubectl
 include::partial$kamel-objects-status.adoc[tag=integration-status]
+--
+oc::
++
+--
+:kube-ns: knativetutorial
+:it-name: cartooon-genre-router
+:k8s-cli: oc
+include::partial$kamel-objects-status.adoc[tag=integration-status]
+--
+====
 
 A successfully built integration context will be in a phase called `Running` as shown below:
 
@@ -286,28 +379,41 @@ include::knative-tutorial:ROOT:partial$watching-logs.adoc[]
 
 Navigate to the `quickstart` folder:
 
+[#camelk-nav-to-quickstart]
 [source,bash,subs="+macros,+attributes"]
 ----
-cd $TUTORIAL_HOME/work/knative-tutorial-camel-k/quickstart
+cd $TUTORIAL_HOME/advanced/camel-k/quickstart
 ----
+copyToClipboard::camelk-nav-to-quickstart[]
 
+[tabs]
+====
+minikube::
++
+--
 :s3-bucket: data
 :k8s-env: minikube
 :k8s-cli: kubectl
+:doc-sec: testupdata
 include::partial$minio-and-s3.adoc[tags=s3-url]
-
-**(OR)**
-
+--
+minishift::
++
+--
 :s3-bucket: data
 :k8s-env: minishift
 :k8s-cli: oc
+:doc-sec: testupdata
 include::partial$minio-and-s3.adoc[tag=s3-url]
+--
+====
 
 Upload XML file called `message1.xml` to s3 bucket called `data`,
 
 :s3-bucket: data
 :s3-upload-file-link: {camelk-demos-github-repo}/quickstart/data/message1.xml
 :s3-upload-file: data/message1.xml
+:doc-sec: upmsgxml
 include::partial$minio-and-s3.adoc[tag=s3-upload-file]
 
 Upload XML file called `message2.xml` to s3 bucket called `data`,
@@ -315,11 +421,13 @@ Upload XML file called `message2.xml` to s3 bucket called `data`,
 :s3-bucket: data
 :s3-upload-file-link: {camelk-demos-github-repo}/quickstart/data/message2.xml
 :s3-upload-file: data/message2.xml
+:doc-sec: upmsgxml2
 include::partial$minio-and-s3.adoc[tag=s3-upload-file]
 
 Verify if the XML files were uploaded to the  s3 bucket:
 
 :s3-bucket: data
+:doc-sec: lsdata2
 include::partial$minio-and-s3.adoc[tag=s3-ls-bucket]
 
 [#cbr-invoke-service]
@@ -327,20 +435,30 @@ include::partial$minio-and-s3.adoc[tag=s3-ls-bucket]
 
 Invoke the service by passing a header `fileName` with value `message1.xml`, this `fileName` header value will be used by Camel route to process the body content of the file to move them to `genre-comedy` or `genre-others` content buckets in s3.
 
+
+[tabs]
+====
+kubectl::
++
+--
 :k8s-env: minikube
 :k8s-cli: kubectl
 :doc-sec: cbr-is
 include::knative-tutorial:ROOT:partial$invoke-service.adoc[tag=env]
-
-**(OR)**
-
+--
+oc::
++
+--
 :k8s-env: minishift
 :k8s-cli: oc
 :doc-sec: cbr-is
 include::knative-tutorial:ROOT:partial$invoke-service.adoc[tag=env]
+--
+====
 
 :svc-name:  cartoon-genre-router
 :file-name: message1.xml
+:doc-sec: msg1invoke
 include::partial$invoke-service.adoc[tags=set-svc-url;invoke-svc]
 
 [NOTE]
@@ -351,16 +469,20 @@ The event simulation above will be removed once the CamelSource event source is 
 On success which is usually HTTP 200, you can list the out `genre-comedy` bucket to see the file `tomandjerry.xml`. You can list the bucket using the command:
 
 :s3-bucket: genre-comedy
+:doc-sec: lstop2
 include::partial$minio-and-s3.adoc[tag=s3-ls-bucket]
 
 Lets try to upload non `comedy` genre to see the file getting uploaded to `genre-others`,
 
+:svc-name:  cartoon-genre-router
 :file-name: message2.xml
+:doc-sec: msg2invoke
 include::partial$invoke-service.adoc[tag=invoke-svc]
 
 Like before on success which is usually HTTP 200, you can list the out `genre-others` bucket to see the file `theadventuresoftenaliraman.xml`. You can list the bucket using the command:
 
 :s3-bucket: genre-others
+:doc-sec: lstop3
 include::partial$minio-and-s3.adoc[tag=s3-ls-bucket]
 
 [NOTE]
@@ -373,22 +495,38 @@ Right now camel-k does not add Liveliness and Readiness Probes which can help av
 [#cbr-cleanup]
 == Cleanup
 
+[#camelk-cleanup-1]
 [source,bash,subs="+macros,+attributes"]
 ----
-kamel delete comedy-genre-handler -n {tutorial-namespace}
-kamel delete others-genre-handler -n {tutorial-namespace}
-kamel delete cartoon-genre-router -n {tutorial-namespace}
+kamel delete comedy-genre-handler -n {tutorial-namespace} && \
+kamel delete others-genre-handler -n {tutorial-namespace} && \
+kamel delete cartoon-genre-router -n {tutorial-namespace} && \
 cd $TUTORIAL_HOME/{camelk-repo}/knative
 ----
+copyToClipboard::camelk-cleanup-1[]
 
+[tabs]
+====
+kubectl::
++
+--
+[#camelk-cleanup-2]
 [source,bash,subs="+macros,+attributes"]
 ----
-kubectl delete -f channels.yaml -n {tutorial-namespace}
+kubectl delete -f channels.yaml -n {tutorial-namespace} && \
 cd $TUTORIAL_HOME
 ----
-**(OR)**
+copyToClipboard::camelk-cleanup-2[]
+--
+oc::
++
+--
+[#camelk-oc-cleanup-2]
 [source,bash,subs="+macros,+attributes"]
 ----
-oc delete -f channels.yaml -n {tutorial-namespace}
+oc delete -f channels.yaml -n {tutorial-namespace} && \
 cd $TUTORIAL_HOME
 ----
+copyToClipboard::camelk-oc-cleanup-2[]
+--
+====

@@ -31,10 +31,10 @@ copyToClipboard::camelk-{doc-sec}-svc-by-oc[]
 #end::set-svc-url[]
 
 #tag::invoke-svc[]
-[#camelk-call-svc]
+[#camelk-{file-name}-call-svc]
 [source,bash,subs="+macros,+attributes"]
 ----
 curl -v -H pass:["Host:${SVC_URL}"] -H 'fileName: {file-name}' $IP_ADDRESS
 ----
-copyToClipboard::camelk-call-svc[]
+copyToClipboard::camelk-{file-name}-call-svc[]
 #end::invoke-svc[]
