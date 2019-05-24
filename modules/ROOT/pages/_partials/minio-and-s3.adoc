@@ -2,6 +2,7 @@
 [s3-bucket='data']
 [s3-upload-file='message1.xml']
 [s3-upload-file-link='']
+[doc-sec='']
 
 #tag::minio-aws-config[]
 [source,bash,subs="+macros,+attributes"]
@@ -25,31 +26,38 @@ aws configure list #<4>
 #end::minio-aws-config[]
 
 #tag::s3-url[]
+[#minio-s3url-{doc-sec}-{k8s-cli}]
 [source,bash,subs="+macros,+attributes"]
 ----
 S3_URL=$({k8s-env} service -n {tutorial-namespace} minio-server --url)
 ----
+copyToClipboard::minio-s3url-{doc-sec}-{k8s-cli}[]
 #end::s3-url[]
 
 #tag::s3-make-bucket[]
-
+[#{doc-sec}-aws-s3-set-eip]
 [source,bash,subs="+macros,+attributes"]
 ----
 aws --endpoint-url $S3_URL s3 mb s3://{s3-bucket}
 ----
+copyToClipboard::{doc-sec}-aws-s3-set-eip[]
 
 #end::s3-make-bucket[]
 
 #tag::s3-upload-file[]
+[#{doc-sec}-aws-s3-upload-file]
 [source,bash,subs="+macros,+attributes"]
 ----
 aws --endpoint-url $S3_URL s3 cp link:{s3-upload-file-link}[{s3-upload-file}]  s3://{s3-bucket}
 ----
+copyToClipboard::{doc-sec}-aws-s3-upload-file[]
 #end::s3-upload-file[]
 
 #tag::s3-ls-bucket[]
+[#{doc-sec}-aws-s3-ls]
 [source,bash,subs="+macros,+attributes"]
 ----
 aws --endpoint-url $S3_URL s3 ls s3://{s3-bucket}
 ----
+copyToClipboard::{doc-sec}-aws-s3-ls[]
 #end::s3-ls-bucket[]
