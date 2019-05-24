@@ -3,10 +3,6 @@ include::_attributes.adoc[]
 
 In this chapter we will use Knative + Camel-k to deploy a simple route that will download a file from s3 and send the file content as response to the Knative serving call.
 
-[#pe-prereq]
-== Prerequisite
-include::partial$prereqs.adoc[]
-
 [#pe-overview]
 == Enterprise Integration Pattern
 

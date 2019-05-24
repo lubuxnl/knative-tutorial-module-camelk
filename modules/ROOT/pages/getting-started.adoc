@@ -3,10 +3,6 @@ include::_attributes.adoc[]
 
 In this chapter we will use Knative + Camel-k to deploy a simple route that will move __*.xml__  file from one s3 bucket to another.
 
-[#gs-prereq]
-== Prerequisite
-include::partial$prereqs.adoc[]
-
 [#gs-overview]
 == Enterprise Integration Pattern 
 

@@ -3,10 +3,6 @@ include::_attributes.adoc[]
 
 In this chapter we will use Knative + Camel-k to deploy a route that will parse the content of the xml file that was added to an s3 bucket and routes the message to different endpoints based on the content.
 
-[#cbr-prereq]
-== Prerequisite
-include::partial$prereqs.adoc[]
-
 [#cbr-overview]
 
 [sidebar]

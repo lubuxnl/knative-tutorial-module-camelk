@@ -7,3 +7,4 @@
 :camelk-repo: advanced/camel-k
 :kamel-version: 0.3.3
 :experimental:
+:maven-version: 3.6.0+
