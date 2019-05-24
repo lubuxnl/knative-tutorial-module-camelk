@@ -86,7 +86,7 @@ include::partial$minio-and-s3.adoc[tags=s3-ls-bucket]
 [#gs-cartoon-messages-mover]
 === Deploy Cartoon Messages Mover
 
-Navigate to camel-k demos in work folder:
+Navigate to camel-k demo sources folder:
 
 [#camelk-nav-to-quickstart-1]
 [source,bash,subs="+macros,+attributes"]

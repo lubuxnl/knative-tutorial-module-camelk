@@ -30,25 +30,37 @@ NOTE: You can skip this step and move to <<pe-cartoon-messages-downloader,deploy
 [#pe-make-s3-data-bucket]
 === Make s3 **data** bucket
 
+[tabs]
+====
+minikube::
++
+--
 :s3-bucket: data
 :k8s-env: minikube
 :k8s-cli: kubectl
+:doc-sec: mkb
 include::partial$minio-and-s3.adoc[tags=s3-url]
-
-**(OR)**
-
+--
+minishift::
++
+--
 :s3-bucket: data
 :k8s-env: minishift
 :k8s-cli: oc
+:doc-sec: mkb
 include::partial$minio-and-s3.adoc[tag=s3-url]
+--
+====
 
 For this demos we will be using a s3 bucket called `data`, run the following command to create the bucket in s3:
 
+:doc-sec: mkb
 include::partial$minio-and-s3.adoc[tags=s3-make-bucket]
 
 Verify the created bucket by listing the s3 storage, running the following command:
 
 :s3-bucket: data
+:doc-sec: lsdata
 include::partial$minio-and-s3.adoc[tags=s3-ls-bucket]
 
 For more information on how to use aws cli with minio server is available https://docs.minio.io/docs/aws-cli-with-minio.html[here].
@@ -61,30 +73,39 @@ You can also create the bucket via the minio xref:setup.adoc#minio-webconsole[we
 [#pe-cartoon-messages-downloader]
 === Deploy Cartoon Messages Downloader
 
-Navigate to camel-k demos in work folder:
+Navigate to camel-k demo sources folder:
 
+[#camelk-nav-to-quickstart-1]
 [source,bash,subs="+macros,+attributes"]
 ----
-cd $TUTORIAL_HOME/work/knative-tutorial-camelk/quickstart
+cd $TUTORIAL_HOME/advanced/camel-k/quickstart
 ----
+copyToClipboard::camelk-nav-to-quickstart-1[]
 
+[#camelk-kamel-deploy-int]
 [source,bash,subs="+macros,+attributes"]
 ----
-kamel run --dependency='camel-aws'\#<1>
+kamel run \
  --property 's3EndpointUrl=http://minio-server' \
  --property 'minioAccessKey=demoaccesskey' \
  --property 'minioSecretKey=demosecretkey' \
  link:{camelk-demos-github-repo}/quickstart/src/main/java/CartoonMessagesDownloader.java[src/main/java/CartoonMessagesDownloader.java]
 ----
-
-<1> Because of an existing https://github.com/apache/camel-k/issues/527[bug], you  need to add the dependency `camel-aws`, this will be removed in future.
+copyToClipboard::camelk-kamel-deploy-int[]
 
 You can check the deployed integration context:
 
+[#camelk-kamel-int-get]
 [source,bash,subs="+macros,+attributes"]
 ----
 kamel get 
-# the command will return
+----
+copyToClipboard::camelk-kamel-int-get[]
+
+Running the above command will return something like:
+
+[source,bash]
+----
 NAME                    PHASE                   CONTEXT
 cartoon-messages-downloader  Building Context        ctx-bhvn6lcba0587gdq5jbg
 ----
@@ -104,28 +125,41 @@ include::knative-tutorial:ROOT:partial$watching-logs.adoc[]
 
 Navigate to the `quickstart` folder:
 
+[#camelk-nav-to-quickstart]
 [source,bash,subs="+macros,+attributes"]
 ----
-cd $TUTORIAL_HOME/work/knative-tutorial-camel-k/quickstart
+cd $TUTORIAL_HOME/advanced/camel-k/quickstart
 ----
+copyToClipboard::camelk-nav-to-quickstart[]
 
+[tabs]
+====
+minikube::
++
+--
 :s3-bucket: data
 :k8s-env: minikube
 :k8s-cli: kubectl
+:doc-sec: testupdata
 include::partial$minio-and-s3.adoc[tags=s3-url]
-
-**(OR)**
-
+--
+minishift::
++
+--
 :s3-bucket: data
 :k8s-env: minishift
 :k8s-cli: oc
+:doc-sec: testupdata
 include::partial$minio-and-s3.adoc[tag=s3-url]
+--
+====
 
 Upload XML file called `message1.xml` to s3 bucket called `data`,
 
 :s3-bucket: data
 :s3-upload-file-link: {camelk-demos-github-repo}/quickstart/data/message1.xml
 :s3-upload-file: data/message1.xml
+:doc-sec: upmsgxml
 include::partial$minio-and-s3.adoc[tag=s3-upload-file]
 
 Upload a text file called `hello.txt` to s3 bucket called `data`,
@@ -133,11 +167,13 @@ Upload a text file called `hello.txt` to s3 bucket called `data`,
 :s3-bucket: data
 :s3-upload-file-link: {camelk-demos-github-repo}/quickstart/data/hello.txt
 :s3-upload-file: data/hello.txt
+:doc-sec: upmsgtxt
 include::partial$minio-and-s3.adoc[tag=s3-upload-file]
 
 Verify if the XML and text files were uploaded to the  s3 bucket:
 
 :s3-bucket: data
+:doc-sec: lsdata2
 include::partial$minio-and-s3.adoc[tag=s3-ls-bucket]
 
 [#pe-invoke-service]
@@ -145,17 +181,25 @@ include::partial$minio-and-s3.adoc[tag=s3-ls-bucket]
 
 Invoke the service by passing a header `fileName` with value `message1.xml`, this `fileName` header value will be used by Camel route to download the file from s3 and return it as the response. 
 
+[tabs]
+====
+kubectl::
++
+--
 :k8s-env: minikube
 :k8s-cli: kubectl
 :doc-sec: pe-is
 include::knative-tutorial:ROOT:partial$invoke-service.adoc[tag=env]
-
-**(OR)**
-
+--
+oc::
++
+--
 :k8s-env: minishift
 :k8s-cli: oc
 :doc-sec: pe-is
 include::knative-tutorial:ROOT:partial$invoke-service.adoc[tag=env]
+--
+====
 
 :svc-name: cartoon-messages-downloader 
 :file-name: message1.xml
@@ -188,7 +232,9 @@ Right now camel-k does not add Liveliness and Readiness Probes which can help av
 [#pe-cleanup]
 == Cleanup
 
+[#camelk-cleanup]
 [source,bash,subs="+macros,+attributes"]
 ----
 kamel delete cartoon-messages-downloader -n {tutorial-namespace}
 ----
+copyToClipboard::camelk-cleanup[]
