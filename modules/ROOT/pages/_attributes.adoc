@@ -1,22 +1,9 @@
 :moduledir: ..
-:branch: master
+:branch: release/0.5
 :github-repo: https://github.com/redhat-developer-demos/knative-tutorial/blob/{branch}
-:camelk-module-github-repo: https://github.com/redhat-developer-docs/knative-tutorial-module-camelk/blob/{branch}
-:camelk-module-github-repo-uri: https://github.com/redhat-developer-docs/knative-tutorial-module-camelk
+:camelk-module-github-repo-uri: https://github.com/redhat-developer-demos/knative-tutorial-module-camelk
 :camelk-demos-github-repo-uri: https://github.com/redhat-developer-demos/knative-tutorial-camelk
 :camelk-demos-github-repo: {camelk-demos-github-repo-uri}/blob/{branch}
-:basics-repo: 02-basics
-:configs-and-routes-repo: 03-configs-and-routes
-:scaling-repo: 04-scaling
-:build-repo: 05-build
-:eventing-repo: 06-eventing
-:camelk-repo: 01-camel-k
+:camelk-repo: advanced/camel-k
+:kamel-version: 0.3.3
 :experimental:
-:knative-serving-repo: https://github.com/knative/serving/releases/download
-:knative-serving-version: v0.4.0
-:knative-build-repo: https://github.com/knative/build/releases/download
-:knative-build-version: v0.4.0
-:knative-eventing-repo: https://github.com/knative/eventing/releases/download
-:knative-eventing-version: v0.4.0
-:knative-sources-repo: https://github.com/knative/eventing-sources/releases/download
-:knative-sources-repo: v0.4.0

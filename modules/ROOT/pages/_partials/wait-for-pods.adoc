@@ -8,15 +8,29 @@ It may take few minutes for pods to come up, you can watch the status of the pod
 You can use kbd:[CTRL + c ] to terminate the watch
 ====
 
+[tabs]
+====
+kubectl::
++
+--
+[#camelk-wait-using-kubectl]
 [source,bash,subs="+macros,+attributes"]
 ----
 kubectl -n {kube-ns} get pods -w 
 ----
-**(OR)**
+copyToClipboard::camelk-wait-using-kubectl[]
+--
+oc::
++
+--
+[#camelk-wait-using-oc]
 [source,bash,subs="+macros,+attributes"]
 ----
 oc -n  {kube-ns} get pods -w 
 ----
+copyToClipboard::camelk-wait-using-oc[]
+--
+====
 
 #end::wait-with-kubectl[]
 

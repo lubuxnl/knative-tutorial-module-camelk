@@ -1,6 +1,6 @@
 name: knative-tutorial-camelk
 title: Eventing with Apache Camel
-version: v1.0.0-SNAPSHOT
+version: 0.3.3
 nav:
   - modules/ROOT/nav.adoc
 start_page: ROOT:index.adoc

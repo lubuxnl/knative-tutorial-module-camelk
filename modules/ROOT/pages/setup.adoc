@@ -5,7 +5,7 @@ include::_attributes.adoc[]
 [#camelk-prerequisite]
 == Prerequisite CLI tools
 
-Apart from the tools you have xref:knative-tutorial:ROOT:01-setup.adoc#prerequisite[installed], you might need few more for camelk sections of the tutorial.
+Apart from the tools you have xref:knative-tutorial-basics:ROOT:01-setup.adoc#prerequisite[installed], you might need few more for camelk sections of the tutorial.
 
 [cols="4*^,4*."]
 |===
@@ -18,30 +18,54 @@ Apart from the tools you have xref:knative-tutorial:ROOT:01-setup.adoc#prerequis
 |===
 
 [#camelk-download-sources]
-== Download Demo Sources
-include::partial$source-code.adoc[tag=camel-k-demos]
+== Demo Sources
+
+include::ROOT:partial$source-code.adoc[tag=camel-k-demos]
+
+== Install Applications
+
+Navigate to the apps folder:
+
+[#camelk-install-nav-to-apps-folder]
+[source,bash,subs="+macros,+attributes"]
+----
+cd $TUTORIAL_HOME/apps
+----
+copyToClipboard::camelk-install-nav-to-apps-folder[]
 
 [#camelk-install-minio-s3]
-== Install minio s3 Object Storage Server
+=== Install minio s3 Object Storage Server
 
 We will use s3 Object storage for all https://www.enterpriseintegrationpatterns.com/patterns/messaging/FileTransferIntegration.html[File Transfer] integration style exercises and demos. The following section shows how to setup https://www.minio.io/[minio] a light weight AWS s3 compatible object storage server.
 
+[tabs]
+====
+kubectl::
++
+--
+[#camelk-install-k8s-minio]
 [source,bash,subs="+macros,+attributes"]
 ----
-cd $TUTORIAL_HOME/apps/minio-s3-server
-kubectl apply -n {tutorial-namespace} -f link:{github-repo}/apps/minio-s3-server/skaffold.yaml[skaffold.yaml]
+kubectl apply --namespace {tutorial-namespace} \
+ --filename link:{github-repo}/apps/minio-s3-server/skaffold.yaml[minio-s3-server/skaffold.yaml]
 ----
-
-**(OR)**
-
+copyToClipboard::camelk-install-k8s-minio[]
+--
+oc::
++
+--
+[#camelk-install-oc-minio]
 [source,bash,subs="+macros,+attributes"]
 ----
-cd $TUTORIAL_HOME/apps/minio-s3-server
-oc apply -n {tutorial-namespace} -f link:{github-repo}/apps/minio-s3-server/skaffold.yaml[skaffold.yaml]
+oc apply --namespace {tutorial-namespace} \
+ --filename link:{github-repo}/apps/minio-s3-server/skaffold.yaml[minio-s3-server/skaffold.yaml]
 ----
+copyToClipboard::camelk-install-oc-minio[]
+--
+====
 
 :kube-ns: knativetutorial
-includepartial$wait-for-pods.adoc[tag=wait-with-kubectl]
+include::partial$wait-for-pods.adoc[tag=wait-with-kubectl]
 
 A successful deployment of the minio server will show the following pods:
 
@@ -54,19 +78,31 @@ minio-server-66449f64bf-dtkch   1/1     Running   0          1m
 
 The mino server exposes a web interface for managing the storage objects. To know the url of the web interface, run the following command:
 
+[tabs]
+====
+minikube::
++
+--
+[#camelk-minio-minikube-svc]
 [source,bash]
 ----
 minikube service list -n {tutorial-namespace}
 ----
-
-**(OR)**
-
+copyToClipboard::camelk-minio-minikube-svc[]
+--
+minishift::
++
+--
+[#camelk-minio-minishift-svc]
 [source,bash,subs="+macros,+attributes"]
 ----
 minishift openshift service list -n {tutorial-namespace}
 ----
+copyToClipboard::camelk-minio-minishift-svc[]
+--
+====
 
-The above command produces an output like:
+Executing the command above shows an output like:
 
 [source,bash,subs="+macros,+attributes"]
 ----
@@ -94,20 +130,24 @@ The official minio documentation is available https://docs.minio.io/[here].
 
 [#minio-aws-cli-configure]
 === Configure s3 aws cli for minio
-includepartial$minio-and-s3.adoc[tag=minio-aws-config]
+include::partial$minio-and-s3.adoc[tag=minio-aws-config]
 
 [#install-camel-k]
 == Install Camel-k
 
-Download the camel-k release from https://github.com/apache/camel-k/releases/latest[here]. Extract the content and add the binary `kamel` to the PATH.
+Download the latest camel-k release from https://github.com/apache/camel-k/releases/latest[here]. Extract the content and add the binary `kamel` to the PATH.
+
+[IMPORTANT]
+====
+As of building this tutorial the latest **kamel** version was `{kamel-version}`
+==== 
 
 Run the following commands to install the camel-k operator in the Kubernetes/OpenShift cluster:
 
 [source,bash,subs="+macros,+attributes"]
 ----
-kamel install -n {tutorial-namespace} --runtime-version='0.3.1-SNAPSHOT' # <1>
+kamel install -n {tutorial-namespace}
 ----
-<1> Due to a existing https://github.com/apache/camel-k/issues/506[bug] which will be fixed as part of 0.3.1 runtime release, we need to use the 0.3.1-SNAPSHOT of the runtime. This constraint will be removed once 0.3.1 runtime is released.
 
 :kube-ns: knativetutorial
 includepartial$wait-for-pods.adoc[tag=wait-with-kubectl]
@@ -117,7 +157,7 @@ includepartial$wait-for-pods.adoc[tag=wait-with-kubectl]
 The camel-k install will take some time, please wait for the successful installation before proceeding to the further sections of this tutorial.
 ====
 
-A successful camel-k setup will have the following pods running/completed in `knativetutorial` namespace:
+A successful camel-k setup will have the following pods running/completed in `{tutorial-namespace}` namespace:
 
 [source,bash,subs="+macros,+attributes"]
 ----
@@ -138,12 +178,13 @@ If you have a local https://www.sonatype.com/nexus-repository-sonatype[nexus] or
 
 e.g. assuming you have nexus repository manager and is available at `http://192.168.64.1:8081/nexus/content/groups/public`
 
+[#camelk-kamel-maven-repo]
 [source,bash,subs="+macros,+attributes"]
 ----
 kamel install -n {tutorial-namespace} \
-  --runtime-version="0.3.1-SNAPSHOT" \
   --repository="http://192.168.64.1:8081/nexus/content/groups/public@id=public@snapshots"
 ----
+copyToClipboard::camelk-kamel-maven-repo[]
 
 Check https://github.com/apache/camel-k#configure-additional-maven-repositories[here] for more details on using maven repositories with camel-k.
 ====
@@ -153,10 +194,18 @@ Check https://github.com/apache/camel-k#configure-additional-maven-repositories[
 
 When camel-k builds the images, it pushes built container image to the local registry of the kubernetes cluster. Knative by default resolves all the tags of the container image to digests(SHA256), to be able to do this we need to have images pushed to real time container registry and repository, for these demos we will be using the local container registry that will be part of the minikube or minishift setup. Run the following commands to make Knative skip tag to digest resolution for local images from local registry.
 
+[tabs]
+====
+kubectl::
++
+--
 :k8s-cli: kubectl
 include::partial$extras.adoc[tag=config-k8s-local-registry]
-
-**(OR)**
-
+--
+oc::
++
+--
 :k8s-cli: oc
 include::partial$extras.adoc[tag=config-k8s-local-registry]
+--
+====
