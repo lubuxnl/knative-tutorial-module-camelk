@@ -10,7 +10,7 @@
 aws configure
 # AWS Access Key ID [None]: demoaccesskey #<1>
 # AWS Secret Access Key [None]: demosecretkey #<2>
-# Default region name [None]: 
+# Default region name [None]: local
 # Default output format [None]: 
 
 aws configure set default.s3.signature_version s3v4 #<3>

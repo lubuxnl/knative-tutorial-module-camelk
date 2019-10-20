@@ -7,7 +7,7 @@
 ----
 K8S_LOCAL_REGISTRY=`{k8s-cli} get svc -n kube-system registry -ojsonpath='{.spec.clusterIP}'` && \ 
 val="pass:[${K8S_LOCAL_REGISTRY}]" && \
-{k8s-cli} -n knative-serving get cm config-controller -oyaml \
+{k8s-cli} -n knative-serving get cm config-deployment -oyaml \
   | yq w - data.registriesSkippingTagResolving $val \
   | {k8s-cli} apply -f -
 ----

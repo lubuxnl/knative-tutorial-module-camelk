@@ -169,6 +169,8 @@ kamel run \
   --property 's3EndpointUrl=http://minio-server' \
   --property 'minioAccessKey=demoaccesskey' \
   --property 'minioSecretKey=demosecretkey' \
+  --dependency camel-bean \
+  --dependency camel-xpath \
  link:{camelk-demos-github-repo}/quickstart/src/main/java/ComedyGenreHandler.java[src/main/java/ComedyGenreHandler.java]
 ----
 copyToClipboard::camelk-kamel-deploy-int[]
@@ -215,6 +217,8 @@ kamel run \
   --property 's3EndpointUrl=http://minio-server' \
   --property 'minioAccessKey=demoaccesskey' \
   --property 'minioSecretKey=demosecretkey' \
+  --dependency camel-bean \
+  --dependency camel-xpath \
  link:{camelk-demos-github-repo}/quickstart/src/main/java/OthersGenreHandler.java[src/main/java/OthersGenreHandler.java]
 ----
 copyToClipboard::camelk-deploy-others-genre-it[]
@@ -262,6 +266,8 @@ kamel run \
   --property 's3EndpointUrl=http://minio-server' \
   --property 'minioAccessKey=demoaccesskey' \
   --property 'minioSecretKey=demosecretkey' \
+  --dependency camel-bean \
+  --dependency camel-xpath \
  link:{camelk-demos-github-repo}/quickstart/src/main/java/CartoonGenreRouter.java[src/main/java/CartoonGenreRouter.java]
 ----
 copyToClipboard::camelk-deploy-cartoon-genre-it[]

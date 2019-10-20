@@ -150,7 +150,7 @@ kamel install -n {tutorial-namespace}
 ----
 
 :kube-ns: knativetutorial
-includepartial$wait-for-pods.adoc[tag=wait-with-kubectl]
+include::partial$wait-for-pods.adoc[tag=wait-with-kubectl]
 
 [NOTE]
 ====
@@ -163,13 +163,7 @@ A successful camel-k setup will have the following pods running/completed in `{t
 ----
 # kubectl -n {tutorial-namespace} get pods | grep camel
 camel-k-cache                                              0/1     Completed   0          10h
-camel-k-ctx-bhq1ddi92mi5b779io60                           0/1     Completed   0          10h
-camel-k-groovy                                             0/1     Completed   0          10h
-camel-k-jvm                                                0/1     Completed   0          10h
-camel-k-knative                                            0/1     Completed   0          10h
-camel-k-kotlin                                             0/1     Completed   0          10h
 camel-k-operator-789b988bd9-9gzjn                          1/1     Running     0          10h
-camel-k-spring-boot                                        0/1     Completed   0          10h
 ----
 
 [TIP]
